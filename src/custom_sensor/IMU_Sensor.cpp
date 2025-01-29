@@ -7,11 +7,17 @@ IMU_Sensor::IMU_Sensor() {
 }
 
 void IMU_Sensor::start() {
+    start(eAccelRange_8G, eGyroRange_2000DPS);
+}
+
+void IMU_Sensor::start(eAccelRange_t acc_range, eGyroRange_t gyro_range) {
     if (available) return;
     
     Wire1.begin();
     if (IMU->begin()) {
         available = true;
+        IMU->setAccelRange(acc_range);
+        IMU->setGyroRange(gyro_range);
     }
 }
 

@@ -12,6 +12,7 @@ public:
     IMU_Sensor();
 
     void start() override;
+    void start(eAccelRange_t, eGyroRange_t);
     void end() override;
 
     void get_data(int ID, byte * data) override;
