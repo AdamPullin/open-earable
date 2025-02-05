@@ -4,6 +4,7 @@
 #include "ArduinoBLE.h"
 #include "Audio_Player.h"
 #include "ble_config/ble_config_earable.h"
+#include "Playback_Synch.h"
 
 struct WAVConfigurationPacket;
 

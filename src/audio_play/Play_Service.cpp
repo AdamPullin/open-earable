@@ -25,7 +25,6 @@ void Play_Service::begin() {
 void Play_Service::receiveWavConfig(BLEDevice central, BLECharacteristic characteristic) {
     characteristic.readValue(&_current, sizeof(_current));
     audio_player.ble_configuration(_current);
-
     Serial.println(String(_current.name, _current.size));
 
     //_wavPlayC_static->writeValue(&_current, sizeof(_current)); // not working yet... there is a weird problem
@@ -33,7 +32,11 @@ void Play_Service::receiveWavConfig(BLEDevice central, BLECharacteristic charact
 
 void Play_Service::receivePlayerState(BLEDevice central, BLECharacteristic characteristic) {
     characteristic.readValue(&_player_state, sizeof(_player_state));
+    Serial.println("Player state: " + String(_player_state));
     audio_player.set_state(_player_state);
+    if (_player_state == 3) {
+        playback_synch.send_interrupt();
+    }
 }
 
 void Play_Service::writePlayerState(uint8_t state) {
