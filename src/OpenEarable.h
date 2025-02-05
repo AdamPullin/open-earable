@@ -20,6 +20,8 @@
 #include <audio_play/JinglePlayer.h>
 #include <audio_play/ToneGenerator.h>
 
+#include <audio_play/Playback_Synch.h>
+
 #include <audio_play/Audio_Player.h>
 
 #include <custom_sensor/SensorManager_Earable.h>
@@ -30,9 +32,11 @@
 #include <sd_logger/IMU_Logger.h>
 #include <sd_logger/BARO_Logger.h>
 
+#include "Flags.h"
 #include <utility>
 
 String device_name;
+bool MASTER_role;
 const String firmware_version = "1.4.0";
 const String hardware_version = "1.4.0";
 
@@ -47,9 +51,10 @@ class OpenEarable {
 public:
     OpenEarable() = default;
 
-    void begin(String d_name) {
+    void begin(String d_name, bool master) {
 
         device_name = d_name;
+        MASTER_role = master;
 
         _interface = new SensorManager_Earable();
         _battery = new Battery_Service();
@@ -70,6 +75,8 @@ public:
             IMULogger::begin();
             BAROLogger::begin();
         }
+
+        playback_synch.setup(MASTER_role);
 
         // Can both be initialized without extra cost
         //bool success = pdm_mic_sensor.init();
@@ -98,10 +105,22 @@ public:
         BLE.advertise();
     };
 
+    static void handleInterrupt() {
+        PLAYING = !PLAYING;
+    }
+
     void update() {
         _battery->update();
 
         task_manager.update();
+
+        if (!MASTER_role) {
+            if (PLAYING) {
+                _debug->println("Interrupt received");
+                PLAYING = false;  // Reset interrupt flag
+                audio_player.set_state(PLAY);
+            }
+        }
     };
 
     void debug(Stream &stream) {
