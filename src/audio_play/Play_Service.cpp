@@ -34,7 +34,7 @@ void Play_Service::receivePlayerState(BLEDevice central, BLECharacteristic chara
     characteristic.readValue(&_player_state, sizeof(_player_state));
     Serial.println("Player state: " + String(_player_state));
     audio_player.set_state(_player_state);
-    if (_player_state == 3) {
+    if (_player_state == 1) {
         playback_synch.send_interrupt();
     }
 }
