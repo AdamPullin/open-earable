@@ -37,6 +37,7 @@
 
 String device_name;
 bool MASTER_role;
+int pin;
 const String firmware_version = "1.4.0";
 const String hardware_version = "1.4.0";
 
@@ -77,6 +78,15 @@ public:
         }
 
         playback_synch.setup(MASTER_role);
+        if (MASTER_role) {
+            pin = EPIN_SDA;
+            pinMode(pin, OUTPUT);
+            digitalWrite(pin, LOW);
+        } else {
+            pin = EPIN_SDA;
+            pinMode(pin, INPUT);
+            attachInterrupt(digitalPinToInterrupt(pin), handleInterrupt, RISING);
+        };
 
         // Can both be initialized without extra cost
         //bool success = pdm_mic_sensor.init();
@@ -106,7 +116,7 @@ public:
     };
 
     static void handleInterrupt() {
-        PLAYING = !PLAYING;
+        PLAYING = true;
     }
 
     void update() {
