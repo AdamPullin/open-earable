@@ -76,7 +76,7 @@ int BLEStream::provide(int max_cont) {
     for (int i = 0; i<cont; i++) {
         for (int k = 0; k < block_size; k+=down_sample * sizeof(int16_t)) {
             memcpy(sos_buffer, read_pointer + i * block_size + k, down_sample * sizeof(int16_t));
-            filter->update((int16_t *) sos_buffer, down_sample);
+            // filter->update((int16_t *) sos_buffer, down_sample);
             ble_buffer[index_ble++] = sos_buffer[0];
             if (index_ble == AUDIO_STREAM_PACKAGE_SIZE) {
                 index_ble = 0;
