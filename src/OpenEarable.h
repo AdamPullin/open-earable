@@ -129,6 +129,7 @@ public:
                         led_color[0] = 255;
 
                 earable_led.set_color(led_color);
+                delay(1000);
     }
 
     void update() {
