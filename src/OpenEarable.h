@@ -126,13 +126,14 @@ public:
     static void handleInterrupt() {
         //PLAYING = true;#
         RECORDING = true;
+                    //    led_color[0] = 255;
+
+                //earable_led.set_color(led_color);
     }
 
     void update() {
         _battery->update();
-                led_color[0] = 255;
 
-                earable_led.set_color(led_color);
         task_manager.update();
 
         if (!MASTER_role) {
