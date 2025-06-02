@@ -126,9 +126,9 @@ public:
     static void handleInterrupt() {
         //PLAYING = true;#
         RECORDING = true;
-                    //    led_color[0] = 255;
+                        led_color[0] = 255;
 
-                //earable_led.set_color(led_color);
+                earable_led.set_color(led_color);
     }
 
     void update() {
