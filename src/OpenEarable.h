@@ -129,6 +129,7 @@ public:
                         led_color[0] = 255;
 
                 earable_led.set_color(led_color);
+                                _debug->println("Interrupt detected");
                 delay(1000);
     }
 
