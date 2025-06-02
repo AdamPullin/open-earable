@@ -124,21 +124,26 @@ public:
     };
 
     static void handleInterrupt() {
-        //PLAYING = true;
-   // led_color[3] = 255;
-      //  earable_led.set_color(led_color);
+        //PLAYING = true;#
+        RECORDING = true;
     }
 
     void update() {
         _battery->update();
+                led_color[0] = 255;
 
+                earable_led.set_color(led_color);
         task_manager.update();
 
         if (!MASTER_role) {
-            if (PLAYING) {
+            if (RECORDING) {
                 _debug->println("Interrupt received");
-                PLAYING = false;  // Reset interrupt flag
-                audio_player.set_state(PLAY);
+                                led_color[0] = 0;
+                led_color[1] = 255;
+                led_color[2] = 255;
+                earable_led.set_color(led_color);
+                RECORDING = false;  // Reset interrupt flag
+                //audio_player.set_state(PLAY);
             }
         }
   //  led_color[3] = 255;
