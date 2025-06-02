@@ -111,11 +111,12 @@ public:
 
         task_manager.begin();
 
-        BLE.setConnectionInterval(0x0006, 0x000C);
+                BLE.setConnectionInterval(0x0006, 0x000C);
         BLE.advertise();
-             //   led_color[1] = 255;
-       // led_color[2] = 255;
-       // earable_led.set_color(led_color);
+        led_color[0] = 255;
+                led_color[1] = 255;
+        led_color[2] = 0;
+        earable_led.set_color(led_color);
        // delay(2000)
         //_debug->println("led on");
       //      led_color[0] = 255;
@@ -123,24 +124,28 @@ public:
 
     };
 
-    static void handleInterrupt() {
+ static void handleInterrupt() {
         //PLAYING = true;#
         RECORDING = true;
-                        led_color[0] = 255;
-
-                earable_led.set_color(led_color);
-                                _debug->println("Interrupt detected");
-                delay(1000);
+                        //led_color[0] = 255;
+                //led_color[2] = 255;
+               // earable_led.set_color(led_color);
+               // open_earable._debug->println("Interrupt detected");
+                //delay(1000);
     }
 
     void update() {
         _battery->update();
 
         task_manager.update();
-
+       // _debug->println("loop received");
         if (!MASTER_role) {
             if (RECORDING) {
-                _debug->println("Interrupt received");
+                                                led_color[0] =255;
+                led_color[1] = 0;
+                led_color[2] = 255;
+                earable_led.set_color(led_color);
+                //_debug->println("Interrupt received");
                                 led_color[0] = 0;
                 led_color[1] = 255;
                 led_color[2] = 255;
