@@ -113,10 +113,20 @@ public:
 
         BLE.setConnectionInterval(0x0006, 0x000C);
         BLE.advertise();
+             //   led_color[1] = 255;
+       // led_color[2] = 255;
+       // earable_led.set_color(led_color);
+       // delay(2000)
+        //_debug->println("led on");
+      //      led_color[0] = 255;
+      //  earable_led.set_color(led_color);
+
     };
 
     static void handleInterrupt() {
-        PLAYING = true;
+        //PLAYING = true;
+   // led_color[3] = 255;
+      //  earable_led.set_color(led_color);
     }
 
     void update() {
@@ -131,6 +141,9 @@ public:
                 audio_player.set_state(PLAY);
             }
         }
+  //  led_color[3] = 255;
+   //     earable_led.set_color(led_color);
+
     };
 
     void debug(Stream &stream) {
