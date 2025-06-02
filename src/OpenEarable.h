@@ -145,7 +145,7 @@ public:
                 led_color[1] = 0;
                 led_color[2] = 255;
                 earable_led.set_color(led_color);
-                //_debug->println("Interrupt received");
+                _debug->println("Interrupt received");
                                 led_color[0] = 0;
                 led_color[1] = 255;
                 led_color[2] = 255;
