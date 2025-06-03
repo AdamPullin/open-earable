@@ -160,12 +160,13 @@ public:
                 earable_led.set_color(led_color);
                 _debug->println("Interrupt received");
 
-                configure_sensor(MicConfigPacket);
+
 
                 led_color[0] = 0;
                 led_color[1] = 255;
                 led_color[2] = 255;
                 earable_led.set_color(led_color);
+                configure_sensor(MicConfigPacket);
                 RECORDING = false;  // Reset interrupt flag
                 //audio_player.set_state(PLAY);
             }
