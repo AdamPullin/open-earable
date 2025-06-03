@@ -45,6 +45,10 @@ bool _data_logger_flag = true;
 
 uint8_t led_color[3] = {0, 0, 0};
 
+SensorConfigurationPacket MicConfigPacket;
+
+
+
 void data_callback(int id, unsigned int timestamp, uint8_t * data, int size);
 void config_callback(SensorConfigurationPacket *config);
 
@@ -122,6 +126,15 @@ public:
       //      led_color[0] = 255;
       //  earable_led.set_color(led_color);
 
+        MicConfigPacket.sensorId =  2;
+        MicConfigPacket.sampleRate =  16000;
+
+        int8_t innerGain = 80;
+        int8_t outerGain = -1;
+        int16_t unused = 0x0000;
+
+        MicConfigPacket.latency = unused | (outerGain << 16) | (innerGain << 24);
+
     };
 
  static void handleInterrupt() {
@@ -141,12 +154,15 @@ public:
        // _debug->println("loop received");
         if (!MASTER_role) {
             if (RECORDING) {
-                                                led_color[0] =255;
+                led_color[0] =255;
                 led_color[1] = 0;
                 led_color[2] = 255;
                 earable_led.set_color(led_color);
                 _debug->println("Interrupt received");
-                                led_color[0] = 0;
+
+                configure_sensor(MicConfigPacket);
+
+                led_color[0] = 0;
                 led_color[1] = 255;
                 led_color[2] = 255;
                 earable_led.set_color(led_color);
