@@ -118,7 +118,7 @@ public:
                 BLE.setConnectionInterval(0x0006, 0x000C);
         BLE.advertise();
         led_color[0] = 255;
-                led_color[1] = 255;
+                led_color[1] = 0;
         led_color[2] = 0;
         earable_led.set_color(led_color);
        // delay(2000)
